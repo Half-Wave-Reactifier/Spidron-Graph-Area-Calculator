@@ -6,32 +6,55 @@
     <title>Calculate Spidron Area</title>
     <style>
         body {
-            font-family: Comic Sans, sans-serif;
-            margin: 20px;
+            font-family: 'Comic Sans MS', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://preview.redd.it/where-can-i-get-the-windows-vista-wallpaper-in-the-best-v0-1lu31x1angtb1.jpg?width=1080&crop=smart&auto=webp&s=cdf84bfb384f85a44c9e7341e63810885d85e5ab');
+            background-size: cover;
+            background-position: center;
         }
-         {
-	background-image: url("https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fwhere-can-i-get-the-windows-vista-wallpaper-in-the-best-v0-1lu31x1angtb1.jpg%3Fwidth%3D1080%26crop%3Dsmart%26auto%3Dwebp%26s%3Dcdf84bfb384f85a44c9e7341e63810885d85e5ab");
-        } 
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
         label, input, button {
             display: block;
             margin-bottom: 10px;
+            width: 100%;
+        }
+        input {
+            padding: 5px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+        h1, h2 {
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Calculate Spidron Area</h1>
-    <label for="x">Enter x:</label>
-    <input type="number" id="x">
-    
-    <label for="n">Enter n:</label>
-    <input type="number" id="n">
-    
-    <label for="k">Enter k:</label>
-    <input type="number" id="k">
-    
-    <button onclick="calculateArea()">Calculate</button>
-    
-    <h2 id="result"></h2>
+    <div class="container">
+        <h1>Calculate Spidron Area</h1>
+        <label for="x">Enter x:</label>
+        <input type="number" id="x">
+        
+        <label for="n">Enter n:</label>
+        <input type="number" id="n">
+        
+        <label for="k">Enter k:</label>
+        <input type="number" id="k">
+        
+        <button onclick="calculateArea()">Calculate</button>
+        
+        <h2 id="result"></h2>
+    </div>
 
     <script src="script.js"></script>
 </body>
