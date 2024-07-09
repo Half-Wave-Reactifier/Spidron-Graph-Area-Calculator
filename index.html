@@ -22,11 +22,9 @@
             border-radius: 10px;
             text-align: center;
         }
-        .input-group, .description {
-            margin-bottom: 10px;
-        }
         label, input, button {
             display: block;
+            margin-bottom: 10px;
             width: 100%;
         }
         input {
@@ -36,46 +34,28 @@
             padding: 10px;
             cursor: pointer;
         }
-        h1, h2, h3 {
+        h1, h2 {
             margin: 10px 0;
         }
-        .description {
-            background: rgba(255, 255, 255, 0.6);
-            padding: 10px;
-            border-radius: 10px;
+         h3 {
+            margin: 7px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Calculate Spidron Area</h1>
-
-        <div class="input-group">
-            <label for="x">Enter x:</label>
-            <input type="number" id="x">
-        </div>
-        <div class="description">
-            <p>x คือ ความยาวด้านของรูป n เหลี่ยม</p>
-        </div>
-
-        <div class="input-group">
-            <label for="n">Enter n:</label>
-            <input type="number" id="n">
-        </div>
-        <div class="description">
-            <p>n คือ รูป n เหลี่ยม</p>
-        </div>
-
-        <div class="input-group">
-            <label for="k">Enter k:</label>
-            <input type="number" id="k">
-        </div>
-        <div class="description">
-            <p>k คือ จำนวนครั้งที่เกิด รูป n เหลี่ยมด้านเท่ามุมเท่าซึ่งเกิดจากจุดตัดของเส้นเชื่อมระหว่างจุดยอด 2 จุดใด ๆ ที่มีจุดยอดอื่นคั่นอยู่ 1 จุด</p>
-        </div>
-
+        <label for="x">Enter x:</label>
+        <input type="number" id="x">
+        
+        <label for="n">Enter n:</label>
+        <input type="number" id="n">
+        
+        <label for="k">Enter k:</label>
+        <input type="number" id="k">
+        
         <button onclick="calculateArea()">Calculate</button>
-
+        
         <h2 id="result"></h2>
         <h3>"n" need to be more than 4</h3>
     </div>
