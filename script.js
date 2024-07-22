@@ -32,6 +32,10 @@ function createSpidron(x, n, k) {
 function plotSpidron(x, n, k) {
     const canvas = document.getElementById('spidronCanvas');
     const ctx = canvas.getContext('2d');
+    const scaleFactor = 80;  // Scale factor to make the Spidron larger
+    const offsetX = canvas.width / 2;
+    const offsetY = canvas.height / 2;
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const points = createSpidron(x, n, k);
@@ -42,16 +46,16 @@ function plotSpidron(x, n, k) {
         for (let i = 0; i < n; i++) {
             const start = layerPoints[i];
             const end = layerPoints[(i + 1) % n];
-            ctx.moveTo(start.x + canvas.width / 2, start.y + canvas.height / 2);
-            ctx.lineTo(end.x + canvas.width / 2, end.y + canvas.height / 2);
+            ctx.moveTo(start.x * scaleFactor + offsetX, start.y * scaleFactor + offsetY);
+            ctx.lineTo(end.x * scaleFactor + offsetX, end.y * scaleFactor + offsetY);
         }
         if (layer > 0) {
             const prevLayerPoints = points[layer - 1];
             for (let i = 0; i < n; i++) {
                 const curr = layerPoints[i];
                 const prev = prevLayerPoints[i];
-                ctx.moveTo(curr.x + canvas.width / 2, curr.y + canvas.height / 2);
-                ctx.lineTo(prev.x + canvas.width / 2, prev.y + canvas.height / 2);
+                ctx.moveTo(curr.x * scaleFactor + offsetX, curr.y * scaleFactor + offsetY);
+                ctx.lineTo(prev.x * scaleFactor + offsetX, prev.y * scaleFactor + offsetY);
             }
         }
     }
@@ -60,7 +64,7 @@ function plotSpidron(x, n, k) {
     ctx.stroke();
 
     ctx.beginPath();
-    const prevLayerPoints = points[0];
+    let prevLayerPoints = points[0];
     for (let layer = 1; layer < k; layer++) {
         const currLayerPoints = points[layer];
         for (let i = 0; i < n; i++) {
@@ -71,9 +75,9 @@ function plotSpidron(x, n, k) {
                 currLayerPoints[nextI],
                 currLayerPoints[i]
             ];
-            ctx.moveTo(polygon[0].x + canvas.width / 2, polygon[0].y + canvas.height / 2);
-            polygon.forEach(p => ctx.lineTo(p.x + canvas.width / 2, p.y + canvas.height / 2));
-            ctx.lineTo(polygon[0].x + canvas.width / 2, polygon[0].y + canvas.height / 2);
+            ctx.moveTo(polygon[0].x * scaleFactor + offsetX, polygon[0].y * scaleFactor + offsetY);
+            polygon.forEach(p => ctx.lineTo(p.x * scaleFactor + offsetX, p.y * scaleFactor + offsetY));
+            ctx.lineTo(polygon[0].x * scaleFactor + offsetX, polygon[0].y * scaleFactor + offsetY);
         }
         prevLayerPoints = currLayerPoints;
     }
@@ -81,6 +85,7 @@ function plotSpidron(x, n, k) {
     ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
     ctx.fill();
 }
+
 
 function calculateAndPlot() {
     const x = parseFloat(document.getElementById('x').value);
