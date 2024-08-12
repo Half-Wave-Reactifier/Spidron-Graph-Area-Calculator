@@ -15,17 +15,22 @@ function calculateArea(x, n, k) {
 function createSpidron(x, n, k) {
     const points = [];
     const angle = 360 / n;
-    for (let layer = 0; layer < k; layer++) {
+
+    for (let layer = 0; layer <= k; layer++) { // เปลี่ยนเป็น <= k
         const layerPoints = [];
+        const offsetAngle = layer * (angle / 2);
         for (let i = 0; i < n; i++) {
-            const theta = (i * angle + layer * angle / 2) * (Math.PI / 180);
+            const theta = (i * angle + offsetAngle) * (Math.PI / 180);
             const xPoint = x * Math.cos(theta);
             const yPoint = x * Math.sin(theta);
             layerPoints.push({ x: xPoint, y: yPoint });
         }
         points.push(layerPoints);
-        x /= 2;
+        x /= 2; // ลดขนาดของ Spidron ในแต่ละเลเยอร์
     }
+
+    console.log('Spidron Points:', points); // ตรวจสอบข้อมูลที่สร้างขึ้น
+
     return points;
 }
 
@@ -41,7 +46,7 @@ function plotSpidron(x, n, k) {
     const points = createSpidron(x, n, k);
 
     ctx.beginPath();
-    for (let layer = 0; layer < k; layer++) {
+    for (let layer = 0; layer <= k; layer++) {
         const layerPoints = points[layer];
         for (let i = 0; i < n; i++) {
             const start = layerPoints[i];
@@ -65,7 +70,7 @@ function plotSpidron(x, n, k) {
 
     ctx.beginPath();
     let prevLayerPoints = points[0];
-    for (let layer = 1; layer < k; layer++) {
+    for (let layer = 1; layer <= k; layer++) {
         const currLayerPoints = points[layer];
         for (let i = 0; i < n; i++) {
             const nextI = (i + 1) % n;
@@ -81,24 +86,26 @@ function plotSpidron(x, n, k) {
         }
         prevLayerPoints = currLayerPoints;
     }
-
-    ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+                    //red,green,blue,alpha
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)';
     ctx.fill();
 }
-
 
 function calculateAndPlot() {
     const x = parseFloat(document.getElementById('x').value);
     const n = parseInt(document.getElementById('n').value);
     const k = parseInt(document.getElementById('k').value);
 
-    if (isNaN(x) || isNaN(n) || isNaN(k) || x <= 0 || n <= 0 || k <= 0) {
-        alert('Please enter valid numbers');
+    if (isNaN(x) || isNaN(n) || isNaN(k) || x <= 0 || n <= 4 || k <= 0) {
+        alert('Please enter valid numbers and ensure n > 4');
         return;
     }
+
+    console.log('Parameters:', { x, n, k }); // ตรวจสอบค่าที่ใช้ในการคำนวณ
 
     const area = calculateArea(x, n, k);
     document.getElementById('result').textContent = `Calculated area: ${area.toFixed(3)}`;
 
     plotSpidron(x, n, k);
 }
+
