@@ -68,10 +68,19 @@ function plotSpidron(x, n, k) {
     ctx.strokeStyle = 'black';
     ctx.stroke();
 
-    ctx.beginPath();
-    let prevLayerPoints = points[0];
+    // Fill the polygons with gradient color
     for (let layer = 1; layer <= k; layer++) {
         const currLayerPoints = points[layer];
+        const prevLayerPoints = points[layer - 1];
+
+        // Define a gradient for this layer
+        const gradient = ctx.createRadialGradient(
+            offsetX, offsetY, 0,  // Inner circle
+            offsetX, offsetY, canvas.width / 2  // Outer circle
+        );
+        gradient.addColorStop(0, `rgba(255, 69, 0, ${0.5 + layer * 0.1})`);  // Red with increasing opacity
+        gradient.addColorStop(1, `rgba(255, 165, 0, ${0.2 + layer * 0.05})`);  // Orange with less opacity
+
         for (let i = 0; i < n; i++) {
             const nextI = (i + 1) % n;
             const polygon = [
@@ -80,16 +89,21 @@ function plotSpidron(x, n, k) {
                 currLayerPoints[nextI],
                 currLayerPoints[i]
             ];
+
+            ctx.beginPath();
             ctx.moveTo(polygon[0].x * scaleFactor + offsetX, polygon[0].y * scaleFactor + offsetY);
             polygon.forEach(p => ctx.lineTo(p.x * scaleFactor + offsetX, p.y * scaleFactor + offsetY));
-            ctx.lineTo(polygon[0].x * scaleFactor + offsetX, polygon[0].y * scaleFactor + offsetY);
+            ctx.closePath();
+
+            // Fill only one polygon per layer with gradient
+            if (i === 0) {
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
         }
-        prevLayerPoints = currLayerPoints;
     }
-                    //red,green,blue,alpha
-    ctx.fillStyle = 'rgba(0, 0, 0, 0)';
-    ctx.fill();
 }
+
 
 function calculateAndPlot() {
     const x = parseFloat(document.getElementById('x').value);
@@ -108,4 +122,3 @@ function calculateAndPlot() {
 
     plotSpidron(x, n, k);
 }
-
