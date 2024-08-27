@@ -1,6 +1,7 @@
 body {
-    font-family: Chakra_Petch; 
-    font-weight: 700; 
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 300;
+    font-style: normal;
     background-image: url('https://wallpapercave.com/wp/wp13928484.jpg');
     background-size: cover;
     display: flex;
