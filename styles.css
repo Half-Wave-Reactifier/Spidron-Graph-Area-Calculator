@@ -1,5 +1,8 @@
 body {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: Chakra_Petch; 
+    font-weight: 700; 
+    font-style: normal; 
+    font-stretch: normal;
     background-image: url('https://wallpapercave.com/wp/wp13928484.jpg');
     background-size: cover;
     display: flex;
@@ -29,4 +32,5 @@ h3 {
     }
 h4 {
     margin: 5px 0;
+    text-align: left;
    }
