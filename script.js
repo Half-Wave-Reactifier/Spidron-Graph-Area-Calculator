@@ -37,10 +37,19 @@ function createSpidron(x, n, k) {
 function plotSpidron(x, n, k) {
     const canvas = document.getElementById('spidronCanvas');
     const ctx = canvas.getContext('2d');
-    const scaleFactor = 80;  // Scale factor to make the Spidron larger
-    const offsetX = canvas.width / 2;
+
+    // Dynamically adjust canvas size based on input
+    const maxDrawingSize = x * 2; // Maximum size of the drawing
+    const padding = maxDrawingSize * 0.2; // Add 20% padding around the drawing
+    const canvasSize = (maxDrawingSize + padding) * 100; // Scale canvas size for better resolution
+
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+
+    const scaleFactor = canvasSize / (maxDrawingSize + padding); // Adjust scale factor to fit drawing
+    const offsetX = canvas.width / 2; // Center the drawing
     const offsetY = canvas.height / 2;
-    
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const points = createSpidron(x, n, k);
@@ -73,13 +82,12 @@ function plotSpidron(x, n, k) {
         const currLayerPoints = points[layer];
         const prevLayerPoints = points[layer - 1];
 
-        // Define a gradient for this layer
         const gradient = ctx.createRadialGradient(
-            offsetX, offsetY, 0,  // Inner circle
-            offsetX, offsetY, canvas.width / 2  // Outer circle
+            offsetX, offsetY, 0,
+            offsetX, offsetY, canvas.width / 2
         );
-        gradient.addColorStop(0, `rgba(255, 69, 0, ${0.5 + layer * 0.1})`);  // Red with increasing opacity
-        gradient.addColorStop(1, `rgba(255, 165, 0, ${0.2 + layer * 0.05})`);  // Orange with less opacity
+        gradient.addColorStop(0, `rgba(255, 69, 0, ${0.5 + layer * 0.1})`);
+        gradient.addColorStop(1, `rgba(255, 165, 0, ${0.2 + layer * 0.05})`);
 
         for (let i = 0; i < n; i++) {
             const nextI = (i + 1) % n;
@@ -95,7 +103,6 @@ function plotSpidron(x, n, k) {
             polygon.forEach(p => ctx.lineTo(p.x * scaleFactor + offsetX, p.y * scaleFactor + offsetY));
             ctx.closePath();
 
-            // Fill only one polygon per layer with gradient
             if (i === 0) {
                 ctx.fillStyle = gradient;
                 ctx.fill();
